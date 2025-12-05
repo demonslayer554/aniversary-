@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Our Timeline 🌸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Optional: Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-gradient: linear-gradient(135deg, #ffe1f0, #ffd6e8, #fdf0ff);
+      --accent-pink: #ff5f9a;
+      --accent-red: #ff305f;
+      --accent-blue-rose: #4f7cff;
+      --soft-text: #5b245b;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --timeline-line: #ff9abf;
+      --shadow-soft: 0 18px 40px rgba(255, 120, 171, 0.25);
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--soft-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    /* ----------- LOADER SCREEN ----------- */
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #ffe6f3 0%, #ffd0e4 40%, #ffb1cf 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-heart {
+      font-size: 110px;
+      animation: heartbeat 1.4s infinite;
+      text-shadow: 0 0 30px rgba(255, 0, 76, 0.4);
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      20% { transform: scale(1.18); }
+      40% { transform: scale(0.97); }
+      60% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    .loader-text {
+      margin-top: 1.8rem;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      color: #89205b;
+    }
+
+    .loader-sub {
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .loading-dots span {
+      animation: blink 1.4s infinite;
+      display: inline-block;
+      font-weight: 600;
+    }
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+      0%, 20% { opacity: 0; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
+      100% { opacity: 0; transform: translateY(0); }
+    }
+
+    /* Floating little hearts */
+    .floating-heart {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.6;
+      animation: floatUp 6s linear infinite;
+    }
+
+    .floating-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .floating-heart:nth-child(2) { left: 25%; animation-delay: 1s; }
+    .floating-heart:nth-child(3) { left: 40%; animation-delay: 2s; }
+    .floating-heart:nth-child(4) { left: 60%; animation-delay: 3s; }
+    .floating-heart:nth-child(5) { left: 80%; animation-delay: 4s; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(40px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      60% { transform: translateY(-120px) scale(1.2); opacity: 0.9; }
+      100% { transform: translateY(-200px) scale(1); opacity: 0; }
+    }
+
+    /* ----------- MAIN PAGE ----------- */
+
+    .page {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .page.visible {
+      opacity: 1;
+    }
+
+    header.hero {
+      padding: 3.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: 2.3rem;
+      font-weight: 600;
+      color: #b4165a;
+      text-shadow: 0 4px 18px rgba(255, 120, 171, 0.4);
+    }
+
+    .hero-subtitle {
+      margin-top: 0.8rem;
+      font-weight: 400;
+      font-size: 1rem;
+      max-width: 480px;
+      margin-inline: auto;
+      opacity: 0.9;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 119, 153, 0.4);
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 10px 24px rgba(255, 120, 171, 0.25);
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ff305f 0%, #ff9abf 100%);
+    }
+
+    .hero-rose {
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      font-size: 2.4rem;
+      transform: rotate(18deg);
+      filter: drop-shadow(0 10px 20px rgba(79, 124, 255, 0.45));
+    }
+
+    .hero-rose.left {
+      left: 5%;
+      right: auto;
+      top: 18%;
+      transform: rotate(-15deg);
+    }
+
+    /* ----------- TIMELINE ----------- */
+
+    .timeline-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1rem 1rem 3rem;
+      position: relative;
+    }
+
+    .timeline {
+      position: relative;
+      margin: 2.5rem auto 0;
+      padding: 2rem 0 3rem;
+    }
+
+    /* central line (tree trunk) */
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 154, 191, 0.05),
+        var(--timeline-line),
+        rgba(255, 154, 191, 0.05)
+      );
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 1.5rem 1.5rem 1.5rem;
+    }
+
+    .timeline-item.left {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item.right {
+      left: 50%;
+      text-align: left;
+    }
+
+    /* branch line from trunk to card */
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      top: 2.4rem;
+      width: 20px;
+      height: 2px;
+      background: var(--timeline-line);
+    }
+
+    .timeline-item.left::before {
+      right: -10px;
+    }
+
+    .timeline-item.right::before {
+      left: -10px;
+    }
+
+    /* circular node on the trunk */
+    .timeline-node {
+      position: absolute;
+      top: 1.9rem;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #ff9abf);
+      box-shadow: 0 0 0 4px rgba(255, 154, 191, 0.35);
+    }
+
+    .timeline-item.left .timeline-node {
+      right: -22px;
+      transform: translateX(50%);
+    }
+
+    .timeline-item.right .timeline-node {
+      left: -22px;
+      transform: translateX(-50%);
+    }
+
+    .timeline-card {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: var(--card-bg);
+      border-radius: 1.4rem;
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 149, 184, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .timeline-card::before {
+      content: "♡";
+      position: absolute;
+      font-size: 5rem;
+      opacity: 0.06;
+      right: -10px;
+      bottom: -20px;
+      color: var(--accent-pink);
+      pointer-events: none;
+    }
+
+    .timeline-item.left .timeline-card {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-image-wrapper {
+      flex-shrink: 0;
+    }
+
+    .image-outline {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(
+        from 180deg,
+        var(--accent-pink),
+        var(--accent-red),
+        var(--accent-blue-rose),
+        var(--accent-pink)
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(255, 120, 171, 0.4);
+      position: relative;
+    }
+
+    .image-outline::after {
+      content: "";
+      position: absolute;
+      inset: 10%;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.5);
+      pointer-events: none;
+    }
+
+    .timeline-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .timeline-text {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .timeline-date {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #c0356b;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #b4165a;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-description {
+      font-size: 0.87rem;
+      opacity: 0.9;
+      line-height: 1.4;
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-chat {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #7c316e;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .timeline-chat span.bubble {
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px dashed rgba(255, 149, 184, 0.7);
+    }
+
+    .timeline-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(79, 124, 255, 0.12);
+      color: var(--accent-blue-rose);
+      margin-top: 0.1rem;
+    }
+
+    /* bottom note */
+    .timeline-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      opacity: 0.8;
+    }
+
+    /* ----------- RESPONSIVE ----------- */
+
+    @media (max-width: 900px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      .hero-rose {
+        display: none;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .timeline::before {
+        left: 26px;
+      }
+
+      .timeline-item,
+      .timeline-item.left,
+      .timeline-item.right {
+        width: 100%;
+        left: 0;
+        text-align: left;
+        padding-left: 3.5rem;
+        padding-right: 0.8rem;
+      }
+
+      .timeline-item::before {
+        left: 26px;
+        width: 26px;
+      }
+
+      .timeline-item.left .timeline-card,
+      .timeline-item.right .timeline-card {
+        flex-direction: row;
+      }
+
+      .timeline-item .timeline-node {
+        left: 26px;
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+</head>
+<body class="no-scroll">
+  <!-- LOADER SCREEN -->
+  <div class="loader" id="loader">
+    <div class="floating-heart">💗</div>
+    <div class="floating-heart">💖</div>
+    <div class="floating-heart">💘</div>
+    <div class="floating-heart">💝</div>
+    <div class="floating-heart">💗</div>
+
+    <div class="loader-heart">❤️</div>
+
+    <div class="loader-text">
+      <div>Loading Your Timeline</div>
+      <div class="loading-dots">
+        <span>.</span><span>.</span><span>.</span>
+      </div>
+      <div class="loader-sub">Every memory, every chat, every little moment… 💫</div>
+    </div>
+  </div>
+
+  <!-- MAIN PAGE -->
+  <div class="page" id="page">
+    <header class="hero">
+      <div class="hero-rose">🌹💙</div>
+      <div class="hero-rose left">💙🌹</div>
+
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span>Our Story • In Moments</span>
+      </div>
+
+      <h1 class="hero-title">Our Little Love Timeline</h1>
+      <p class="hero-subtitle">
+        Scroll down to walk through the tiny miracles that brought us closer —
+        from first chats to the moments that made our hearts say “yes”. 💞
+      </p>
+    </header>
+
+    <section class="timeline-wrapper">
+      <div class="timeline">
+
+        <!-- TIMELINE ITEM 1 -->
+        <article class="timeline-item left">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-image-wrapper">
+              <div class="image-outline">
+                <!-- Replace src with your image -->
+                <img src="images/first-chat.jpg" alt="First chat" class="timeline-image" />
+              </div>
+            </div>
+            <div class="timeline-text">
+              <div class="timeline-date">12 Jan 2024</div>
+              <div class="timeline-title">First “Hi” That Changed Everything</div>
+              <p class="timeline-description">
+                The day a simple notification lit up both our screens… and slowly, our lives.
+                Maybe it looked ordinary from outside, but for us it was the first branch of our story-tree. 🌱
+              </p>
+              <div class="timeline-chat">
+                💬 <span class="bubble">“Hi… can I tell you something?”</span>
+              </div>
+              <div class="timeline-tag">✨ First Chat</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- TIMELINE ITEM 2 -->
+        <article class="timeline-item right">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-image-wrapper">
+              <div class="image-outline">
+                <!-- Replace src with your image -->
+                <img src="images/late-night-talks.jpg" alt="Late night talk" class="timeline-image" />
+              </div>
+            </div>
+            <div class="timeline-text">
+              <div class="timeline-date">04 Mar 2024</div>
+              <div class="timeline-title">First Late-Night Conversation</div>
+              <p class="timeline-description">
+                Hours felt like minutes, and suddenly 2 AM didn’t feel lonely anymore.
+                Your sleepy voice, my stupid jokes, and a chat that didn’t want to end.
+              </p>
+              <div class="timeline-chat">
+                💬 <span class="bubble">“Okay last question, then we sleep… promise!”</span>
+              </div>
+              <div class="timeline-tag">🌙 Late Night Vibes</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- TIMELINE ITEM 3 -->
+        <article class="timeline-item left">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-image-wrapper">
+              <div class="image-outline">
+                <!-- Replace src with your image -->
+                <img src="images/first-compliment.jpg" alt="First compliment" class="timeline-image" />
+              </div>
+            </div>
+            <div class="timeline-text">
+              <div class="timeline-date">21 Jun 2024</div>
+              <div class="timeline-title">That One Compliment You Still Remember</div>
+              <p class="timeline-description">
+                The day I finally said out loud how beautiful you are — not just your face,
+                but your heart, your chaos, your softness, your sarcasm… all of it.
+              </p>
+              <div class="timeline-chat">
+                💬 <span class="bubble">“You know you’re my favourite kind of human, right?”</span>
+              </div>
+              <div class="timeline-tag">💗 Heart Moment</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- TIMELINE ITEM 4 -->
+        <article class="timeline-item right">
+          <div class="timeline-node"></div>
+          <div class="timeline-card">
+            <div class="timeline-image-wrapper">
+              <div class="image-outline">
+                <!-- Replace src with your image -->
+                <img src="images/future-dreams.jpg" alt="Future plans" class="timeline-image" />
+              </div>
+            </div>
+            <div class="timeline-text">
+              <div class="timeline-date">Future</div>
+              <div class="timeline-title">So Many Pages Yet To Be Written</div>
+              <p class="timeline-description">
+                Every new memory, every date, every inside joke we create will grow this tree —
+                branch by branch, moment by moment. This is just the beginning. 🌸
+              </p>
+              <div class="timeline-chat">
+                💬 <span class="bubble">“Save this date… we’ll add something special here soon.”</span>
+              </div>
+              <div class="timeline-tag">🌹 Blue Rose Dreams</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="timeline-footer">
+        You can edit these dates, titles, images and chats anytime — this timeline grows with us. 💌
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // Simple fake loading; you can change the duration or trigger it when real data is ready
+    document.addEventListener("DOMContentLoaded", function () {
+      const loader = document.getElementById("loader");
+      const page = document.getElementById("page");
+
+      // Adjust the time (in ms) if you want the loader longer/shorter
+      const LOADING_TIME = 2600;
+
+      setTimeout(() => {
+        loader.classList.add("hide");
+        document.body.classList.remove("no-scroll");
+        page.classList.add("visible");
+      }, LOADING_TIME);
+    });
+  </script>
+</body>
+  </html>
