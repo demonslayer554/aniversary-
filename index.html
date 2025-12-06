@@ -21,7 +21,7 @@
       --accent-red: #ff305f;
       --accent-blue-rose: #4f7cff;
       --soft-text: #5b245b;
-      --card-bg: rgba(255, 255, 255, 0.8);
+      --card-bg: rgba(255, 255, 255, 0.85);
       --timeline-line: #ff9abf;
       --shadow-soft: 0 18px 40px rgba(255, 120, 171, 0.25);
     }
@@ -59,7 +59,7 @@
     }
 
     .loader-heart {
-      font-size: 110px;
+      font-size: 120px;
       animation: heartbeat 1.4s infinite;
       text-shadow: 0 0 30px rgba(255, 0, 76, 0.4);
     }
@@ -165,7 +165,7 @@
       gap: 0.4rem;
       padding: 0.3rem 0.8rem;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 119, 153, 0.4);
       font-size: 0.8rem;
       margin-bottom: 0.8rem;
@@ -200,7 +200,7 @@
     .timeline-wrapper {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 1rem 1rem 3rem;
+      padding: 1rem 1rem 3.2rem;
       position: relative;
     }
 
@@ -226,12 +226,13 @@
       );
       transform: translateX(-50%);
       border-radius: 999px;
+      box-shadow: 0 0 15px rgba(255, 154, 191, 0.45);
     }
 
     .timeline-item {
       position: relative;
       width: 50%;
-      padding: 1.5rem 1.5rem 1.5rem;
+      padding: 2rem 1.8rem 2rem;
     }
 
     .timeline-item.left {
@@ -244,30 +245,36 @@
       text-align: left;
     }
 
-    /* branch line from trunk to card */
+    /* Curved branch line from trunk to card */
     .timeline-item::before {
       content: "";
       position: absolute;
-      top: 2.4rem;
-      width: 20px;
-      height: 2px;
-      background: var(--timeline-line);
+      top: 2.6rem;
+      width: 90px;
+      height: 60px;
+      border-radius: 70px;
+      border: 2px solid var(--timeline-line);
+      background: transparent;
     }
 
     .timeline-item.left::before {
-      right: -10px;
+      right: -35px;
+      border-color: transparent transparent var(--timeline-line) var(--timeline-line);
+      /* quarter curve from trunk to left */
     }
 
     .timeline-item.right::before {
-      left: -10px;
+      left: -35px;
+      border-color: transparent var(--timeline-line) var(--timeline-line) transparent;
+      /* mirrored quarter curve from trunk to right */
     }
 
     /* circular node on the trunk */
     .timeline-node {
       position: absolute;
-      top: 1.9rem;
-      width: 22px;
-      height: 22px;
+      top: 2.1rem;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       border: 3px solid #fff;
       background: radial-gradient(circle at 30% 30%, #ffffff, #ff9abf);
@@ -275,24 +282,24 @@
     }
 
     .timeline-item.left .timeline-node {
-      right: -22px;
+      right: -18px;
       transform: translateX(50%);
     }
 
     .timeline-item.right .timeline-node {
-      left: -22px;
+      left: -18px;
       transform: translateX(-50%);
     }
 
     .timeline-card {
       display: flex;
-      gap: 1rem;
+      gap: 1.1rem;
       align-items: center;
       background: var(--card-bg);
-      border-radius: 1.4rem;
-      padding: 1rem 1.1rem;
+      border-radius: 1.6rem;
+      padding: 1.2rem 1.3rem;
       box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 149, 184, 0.35);
       position: relative;
       overflow: hidden;
@@ -301,7 +308,7 @@
     .timeline-card::before {
       content: "♡";
       position: absolute;
-      font-size: 5rem;
+      font-size: 5.5rem;
       opacity: 0.06;
       right: -10px;
       bottom: -20px;
@@ -318,8 +325,8 @@
     }
 
     .image-outline {
-      width: 80px;
-      height: 80px;
+      width: 130px;   /* bigger for chat screenshot clarity */
+      height: 130px;
       border-radius: 50%;
       padding: 3px;
       background: conic-gradient(
@@ -332,7 +339,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 20px rgba(255, 120, 171, 0.4);
+      box-shadow: 0 0 24px rgba(255, 120, 171, 0.45);
       position: relative;
     }
 
@@ -350,12 +357,12 @@
       height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.9);
+      border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
     .timeline-text {
       flex: 1;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
     }
 
     .timeline-date {
@@ -367,32 +374,33 @@
     }
 
     .timeline-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 600;
       color: #b4165a;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
     }
 
     .timeline-description {
-      font-size: 0.87rem;
+      font-size: 0.88rem;
       opacity: 0.9;
-      line-height: 1.4;
-      margin-bottom: 0.35rem;
+      line-height: 1.45;
+      margin-bottom: 0.4rem;
     }
 
     .timeline-chat {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-style: italic;
       color: #7c316e;
       display: flex;
       align-items: center;
       gap: 0.35rem;
+      flex-wrap: wrap;
     }
 
     .timeline-chat span.bubble {
-      padding: 0.2rem 0.5rem;
+      padding: 0.22rem 0.55rem;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       border: 1px dashed rgba(255, 149, 184, 0.7);
     }
 
@@ -408,10 +416,9 @@
       margin-top: 0.1rem;
     }
 
-    /* bottom note */
     .timeline-footer {
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
       font-size: 0.82rem;
       opacity: 0.8;
     }
@@ -438,13 +445,24 @@
         width: 100%;
         left: 0;
         text-align: left;
-        padding-left: 3.5rem;
-        padding-right: 0.8rem;
+        padding-left: 3.6rem;
+        padding-right: 0.9rem;
       }
 
+      /* On mobile, simpler straight connector so it doesn’t look messy */
       .timeline-item::before {
+        width: 30px;
+        height: 2px;
+        border-radius: 0;
+        border: none;
+        background: var(--timeline-line);
+        top: 2.5rem;
         left: 26px;
-        width: 26px;
+      }
+
+      .timeline-item .timeline-node {
+        left: 26px;
+        transform: translateX(-50%);
       }
 
       .timeline-item.left .timeline-card,
@@ -452,9 +470,9 @@
         flex-direction: row;
       }
 
-      .timeline-item .timeline-node {
-        left: 26px;
-        transform: translateX(-50%);
+      .image-outline {
+        width: 105px;
+        height: 105px;
       }
     }
   </style>
@@ -506,7 +524,7 @@
           <div class="timeline-card">
             <div class="timeline-image-wrapper">
               <div class="image-outline">
-                <!-- Replace src with your image -->
+                <!-- Replace src with your image (chat screenshot, etc.) -->
                 <img src="images/first-chat.jpg" alt="First chat" class="timeline-image" />
               </div>
             </div>
@@ -608,7 +626,7 @@
   </div>
 
   <script>
-    // Simple fake loading; you can change the duration or trigger it when real data is ready
+    // Simple fake loading; you can change the duration or hook it to real loading
     document.addEventListener("DOMContentLoaded", function () {
       const loader = document.getElementById("loader");
       const page = document.getElementById("page");
@@ -624,4 +642,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
